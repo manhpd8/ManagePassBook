@@ -15,6 +15,8 @@ public class CPanel extends javax.swing.JFrame {
      * Creates new form CPannel
      */
     ClientRegisterView clientRegisterView;
+    OpenPassbookView openPassbookView;
+    CalculateInterestSearchView calculateInterestSearchView;
     public CPanel() {
         initComponents();
         this.setLocation(700, 200);
@@ -101,11 +103,18 @@ public class CPanel extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        new CalculateInterestSearchView().setVisible(true);
+        if(calculateInterestSearchView == null){
+            calculateInterestSearchView = new CalculateInterestSearchView();
+        }
+        calculateInterestSearchView.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        if(openPassbookView == null){
+            openPassbookView = new OpenPassbookView();
+        }
+        openPassbookView.setVisible(true);
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
