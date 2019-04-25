@@ -7,24 +7,20 @@ package View;
 
 import Controller.PassbookController;
 import DAO.ClientDAO;
+import DAO.PassbookTypeDAO;
+import DAO.RateDAO;
 import Model.Client;
 import Model.Passbook;
 import Model.PassbookType;
 import Model.Period;
+import Model.Rate;
 import Utility.StringUtility;
-import com.mysql.cj.xdevapi.Result;
-import connect.DBConnect;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /**
  *
@@ -36,10 +32,14 @@ public class OpenPassbookView extends javax.swing.JFrame {
      * Creates new form OpenPassbookView
      */
     ClientDAO clientDAO;
+    RateDAO rateDAO;
+    PassbookTypeDAO passbookTypeDAO;
     PassbookController passbookController;
     public OpenPassbookView() {
         initComponents();
         clientDAO = new ClientDAO();
+        rateDAO = new RateDAO();
+        passbookTypeDAO = new PassbookTypeDAO();
         passbookController = new PassbookController();
         loadDefaultValues();
     }
@@ -378,10 +378,11 @@ public class OpenPassbookView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -396,12 +397,13 @@ public class OpenPassbookView extends javax.swing.JFrame {
             int soTien = validateSoTienGui();
             validateCombobox();
             PassbookType passbookType = (PassbookType) jCBPassbookType.getSelectedItem();
-            //Period rate = (Rate) jCBPeriod
+            Period period = (Period) jCBPeriod.getSelectedItem();
+            Rate rate = rateDAO.getRateByPeriod(period.getPeriod());
             Passbook passbook = new Passbook();
             passbook.setId_staff(1);
             passbook.setStart_date(jDateOpen.getDate());
             passbook.setId_passbook_type(passbookType.getId());
-            passbook.setId_interest_rate(soTien);
+            passbook.setId_interest_rate(rate.getId());
             passbook.setMoney_value(soTien);
             passbook.setStatus("OPEN");
             passbook.setId_client(maKH);
@@ -412,14 +414,15 @@ public class OpenPassbookView extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Mở sổ không thành công");
             }
         } catch (Exception ex) {
-            btnSave.setEnabled(true);
             Logger.getLogger(OpenPassbookView.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Lỗi!", JOptionPane.ERROR_MESSAGE);
         }
+        btnSave.setEnabled(true);
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void jTextMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextMoneyActionPerformed
@@ -510,9 +513,7 @@ public class OpenPassbookView extends javax.swing.JFrame {
             } catch(NumberFormatException ex) {
                 throw new Exception("Định dạng số tiền không hợp lệ");
             }
-
         }
-
     }
 
     /**
@@ -599,53 +600,23 @@ public class OpenPassbookView extends javax.swing.JFrame {
     }
 
     private void loadPassbookType() {
-        try {
-            Connection connect = DBConnect.getConnecttion();
-            String sql = "SELECT * FROM passbook_type";
-            Statement statement = connect.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                int id = resultSet.getInt(1);
-                String code = resultSet.getString(2);
-                String name = resultSet.getString(3);
-                PassbookType type = new PassbookType(id, code, name);
-                jCBPassbookType.addItem(type);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(OpenPassbookView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        List<PassbookType> passbook_types = passbookTypeDAO.getAllPassbookType();
+        for(PassbookType type : passbook_types) {
+             jCBPassbookType.addItem(type);
+        }  
     }
 
     private void loadPeriod() {
-        try {
-            Connection connect = DBConnect.getConnecttion();
-            String sql = "SELECT period_month FROM interest_rate";
-            Statement statement = connect.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                int p = resultSet.getInt(1);
-                Period period = new Period(p);
-                jCBPeriod.addItem(period);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(OpenPassbookView.class.getName()).log(Level.SEVERE, null, ex);
+        List<Rate> list_rate = rateDAO.getAllRate();
+        for(Rate rate : list_rate) {
+            jCBPeriod.addItem(new Period(rate.getPeriod()));
         }
     }
 
     private void updateRate() {
         Period period = (Period) jCBPeriod.getSelectedItem();
-        try {
-            Connection connect = DBConnect.getConnecttion();
-            String sql = "SELECT rate FROM interest_rate WHERE period_month = '" + period.getPeriod() +"'";
-            Statement statement = connect.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            if(resultSet.next()) {
-                jTextRate.setText(resultSet.getString(1));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(OpenPassbookView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Rate rate = rateDAO.getRateByPeriod(period.getPeriod());
+        jTextRate.setText(String.valueOf(rate.getRate()).trim());        
     }
 
     private void updatePeriodDate() {
@@ -663,7 +634,15 @@ public class OpenPassbookView extends javax.swing.JFrame {
         }
     }
 
-    private void validateCombobox() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void validateCombobox() throws Exception {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PassbookType type = (PassbookType)jCBPassbookType.getSelectedItem();
+        if(type.getCode().equals("CKH")) {
+            Period period = (Period) jCBPeriod.getSelectedItem();
+            if(period.getPeriod() == Period.KKH) {
+                jCBPeriod.requestFocus();
+                throw new Exception("Chọn kỳ hạn hợp lệ");
+            }
+        }
     }
 }
