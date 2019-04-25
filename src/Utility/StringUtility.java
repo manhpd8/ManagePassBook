@@ -15,7 +15,9 @@ public class StringUtility {
     public static String NOT_NULL_NAME = "name is not null";
     public static String NOT_NULL_IDCARD = "id card is not null";
     public static String NOT_NULL_ADDRESS = "address is not null";
-    
+    public static String NOT_EMPTY_SEARCH_KEY_INPUT="Search Key cannot empty, fill pls";
+    public static String RESULT_EMPTY="Search result is empty";
+    public static String INPUT_ONLY_NUMBER="search input only number";
     
     public static String INVALID_USERNAME = "user Name is invalid";
     public static String INVALID_PASSWORD = "pass word is invalid";
@@ -32,6 +34,10 @@ public class StringUtility {
     public static String GENDER_MALE = "male";
     public static String GENDER_FEMALE = "fmale";
     public static String GENDER_UNKNOWN = "unkn";
+    
+    public static double LAI_XUAT_KKH= 0.2;
+    
+    
     public static boolean NullOrEmpty(String str){
         return str == null || str.length() == 0;
     }
