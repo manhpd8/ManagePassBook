@@ -38,6 +38,9 @@ public class StringUtility {
     public static double LAI_XUAT_KKH= 0.2;
     
     
+    public static final String DATE_FORMAT = "dd/MM/yyyy";
+    public static final String ERROR_NULL_OR_EMPTY = "Không được để trống ô này!";
+    public static final String ERROR_NOT_NUMERIC = "Dữ liệu bạn nhập chứa ký tự không phải số!";
     public static boolean NullOrEmpty(String str){
         return str == null || str.length() == 0;
     }
