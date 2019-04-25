@@ -70,7 +70,7 @@ public class CalculateInterestResultView extends javax.swing.JFrame {
         if (pbs.getLoaiSo().equalsIgnoreCase("KKH")) {
             lai = ((double) pbs.getGoc()) * ((double) ngay / 360) * (StringUtility.LAI_XUAT_KKH / 100);
         } else {
-            if (ngay <= (pbs.getKyhan() * 30)) {
+            if (ngay < (pbs.getKyhan() * 30)) {
                 lai = ((double) pbs.getGoc()) * ((double) ngay / 360) * (StringUtility.LAI_XUAT_KKH  / 100);
             } else {
                 double laidaohan = ((double) pbs.getGoc()) * ((double) pbs.getLaiXuat() / 100);

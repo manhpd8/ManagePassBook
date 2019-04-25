@@ -42,6 +42,7 @@ public class OpenPassbookView extends javax.swing.JFrame {
         passbookTypeDAO = new PassbookTypeDAO();
         passbookController = new PassbookController();
         loadDefaultValues();
+        
     }
 
     /**
@@ -65,9 +66,9 @@ public class OpenPassbookView extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jTextMoney = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jCBPassbookType = new javax.swing.JComboBox<Object>();
+        jCBPassbookType = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jCBPeriod = new javax.swing.JComboBox<Object>();
+        jCBPeriod = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         jTextRate = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -592,7 +593,8 @@ public class OpenPassbookView extends javax.swing.JFrame {
         String currentDate = sdf.format(calendar.getTime());
         jTextCreatedDate.setText(currentDate);
         jTextDateInput.setText(currentDate);
-
+        jTextRate.setEditable(false);
+        jDateOpen.setDate(calendar.getTime());
         loadPassbookType();
         loadPeriod();
         updateRate();

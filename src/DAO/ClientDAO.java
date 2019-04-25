@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class ClientDAO {
     
-        public boolean isClientExistedId(int id){
+    public boolean isClientExistedId(int id){
         try {
             Connection con = DBConnect.getConnecttion();
             String sql = "SELECT count(*) FROM manage_passbook.client where id= '" + id +"'";
