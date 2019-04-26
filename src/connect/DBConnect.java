@@ -13,15 +13,16 @@ import java.sql.DriverManager;
  * @author NguyenDang
  */
 public class DBConnect {
-    
-     public static Connection getConnecttion() {
-        Connection cons = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            cons = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/manage_passbook", "root", "gom8kitu");
-        } catch (Exception e) {
-            e.printStackTrace();
+    private static Connection cons = null;
+    public static Connection getConnecttion() {
+        if(cons == null) {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                cons = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/manage_passbook", "root", "");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return cons;
     }

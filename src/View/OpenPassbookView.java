@@ -35,6 +35,7 @@ public class OpenPassbookView extends javax.swing.JFrame {
     RateDAO rateDAO;
     PassbookTypeDAO passbookTypeDAO;
     PassbookController passbookController;
+    private CPanel cPanel;
     public OpenPassbookView() {
         initComponents();
         clientDAO = new ClientDAO();
@@ -389,6 +390,10 @@ public class OpenPassbookView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void setCPanel(CPanel cPanel) {
+        this.cPanel = cPanel;
+    }
+    
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
         try {
@@ -409,6 +414,7 @@ public class OpenPassbookView extends javax.swing.JFrame {
             passbook.setId_client(maKH);
             if(passbookController.insertPassbook(passbook) ) {
                 JOptionPane.showMessageDialog(this, "Mở sổ thành công");
+                refreshData();
             }
             else {
                 JOptionPane.showMessageDialog(this, "Mở sổ không thành công");
@@ -422,6 +428,8 @@ public class OpenPassbookView extends javax.swing.JFrame {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        if(cPanel != null) cPanel.setVisible(true);
 
     }//GEN-LAST:event_btnBackActionPerformed
 
@@ -448,8 +456,6 @@ public class OpenPassbookView extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi!", JOptionPane.ERROR_MESSAGE);
         }
-
-
     }//GEN-LAST:event_jBtnTimKHActionPerformed
 
     private void jCBPassbookTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBPassbookTypeActionPerformed
@@ -506,8 +512,12 @@ public class OpenPassbookView extends javax.swing.JFrame {
         } else {
             try {
                 int money = Integer.parseInt(text);
-                if(money % 100 != 0) {
-                    throw new Exception("Số tiền phải là bội của 100");
+                if(money % 1000 != 0) {
+                    throw new Exception("Số tiền phải là bội của 1000đ");
+                }
+                PassbookType passbookType = (PassbookType)jCBPassbookType.getSelectedItem();
+                if(!passbookController.validateMinAmountRequired(passbookType.getCode(), money)) {
+                    throw new Exception("Số tiền gửi phải lớn hơn " +passbookController.getMinAmount(passbookType.getCode())+ "đ");
                 }
                 return money;
             } catch(NumberFormatException ex) {
@@ -586,6 +596,16 @@ public class OpenPassbookView extends javax.swing.JFrame {
     private javax.swing.JTextField jTextRate;
     // End of variables declaration//GEN-END:variables
 
+    
+    private void refreshData() {
+        jTextMaKH.setText("");
+        jTextMoney.setText("");
+        jTextPeriodDate.setText("../../....");
+        jLabelCustomerName.setText("");
+        jCBPassbookType.setSelectedIndex(0);
+        jCBPeriod.setSelectedIndex(0);
+        jDateOpen.setDate(Calendar.getInstance().getTime());
+    }
     private void loadDefaultValues() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(StringUtility.DATE_FORMAT);
@@ -637,12 +657,19 @@ public class OpenPassbookView extends javax.swing.JFrame {
     private void validateCombobox() throws Exception {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         PassbookType type = (PassbookType)jCBPassbookType.getSelectedItem();
-        if(type.getCode().equals("CKH")) {
+        if(!type.getCode().equals("KKH")) {
             Period period = (Period) jCBPeriod.getSelectedItem();
             if(period.getPeriod() == Period.KKH) {
                 jCBPeriod.requestFocus();
                 throw new Exception("Chọn kỳ hạn hợp lệ");
             }
         }
+//        else if(type.getCode().equals("KKH")) {
+//            Period period = (Period) jCBPeriod.getSelectedItem();
+//            if(period.getPeriod() != Period.KKH) {
+//                jCBPeriod.requestFocus();
+//                throw new Exception("Chọn kỳ hạn hợp lệ");
+//            }
+//        }
     }
 }
