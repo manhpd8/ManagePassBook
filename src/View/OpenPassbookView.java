@@ -5,7 +5,7 @@
  */
 package View;
 
-import Controller.PassbookController;
+import Controller.OpenPassbookController;
 import DAO.ClientDAO;
 import DAO.PassbookTypeDAO;
 import DAO.RateDAO;
@@ -15,12 +15,17 @@ import Model.PassbookType;
 import Model.Period;
 import Model.Rate;
 import Utility.StringUtility;
+import com.toedter.calendar.JDateChooser;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -31,19 +36,9 @@ public class OpenPassbookView extends javax.swing.JFrame {
     /**
      * Creates new form OpenPassbookView
      */
-    ClientDAO clientDAO;
-    RateDAO rateDAO;
-    PassbookTypeDAO passbookTypeDAO;
-    PassbookController passbookController;
-    private CPanel cPanel;
+
     public OpenPassbookView() {
-        initComponents();
-        clientDAO = new ClientDAO();
-        rateDAO = new RateDAO();
-        passbookTypeDAO = new PassbookTypeDAO();
-        passbookController = new PassbookController();
-        loadDefaultValues();
-        
+        initComponents();       
     }
 
     /**
@@ -67,9 +62,9 @@ public class OpenPassbookView extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jTextMoney = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jCBPassbookType = new javax.swing.JComboBox<>();
+        jCBPassbookType = new javax.swing.JComboBox<Object>();
         jLabel3 = new javax.swing.JLabel();
-        jCBPeriod = new javax.swing.JComboBox<>();
+        jCBPeriod = new javax.swing.JComboBox<Object>();
         jLabel11 = new javax.swing.JLabel();
         jTextRate = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -106,11 +101,6 @@ public class OpenPassbookView extends javax.swing.JFrame {
         jTextMaKH.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jBtnTimKH.setText("Tìm");
-        jBtnTimKH.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnTimKHActionPerformed(evt);
-            }
-        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Tên khách hàng:");
@@ -160,31 +150,15 @@ public class OpenPassbookView extends javax.swing.JFrame {
         jTextMoney.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextMoney.setText("0");
         jTextMoney.setToolTipText("");
-        jTextMoney.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextMoneyActionPerformed(evt);
-            }
-        });
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText("Loại sổ tiết kiệm:");
 
         jCBPassbookType.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jCBPassbookType.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jCBPassbookType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBPassbookTypeActionPerformed(evt);
-            }
-        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Kỳ hạn:");
-
-        jCBPeriod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBPeriodActionPerformed(evt);
-            }
-        });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel11.setText("Lãi xuất / năm:");
@@ -323,18 +297,8 @@ public class OpenPassbookView extends javax.swing.JFrame {
         jLabelError.setForeground(new java.awt.Color(255, 0, 0));
 
         btnSave.setText("Lưu");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
 
         btnBack.setText("Trở lại");
-        btnBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -391,141 +355,68 @@ public class OpenPassbookView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setCPanel(CPanel cPanel) {
-        this.cPanel = cPanel;
+
+    public JButton getBtnBack() {
+        return btnBack;
+    }
+
+    public JButton getBtnSave() {
+        return btnSave;
+    }
+
+    public JButton getjBtnTimKH() {
+        return jBtnTimKH;
+    }
+
+    public JComboBox<Object> getjCBPassbookType() {
+        return jCBPassbookType;
+    }
+
+    public JComboBox<Object> getjCBPeriod() {
+        return jCBPeriod;
+    }
+
+    public JDateChooser getjDateOpen() {
+        return jDateOpen;
+    }
+
+    public JLabel getjLabelCustomerName() {
+        return jLabelCustomerName;
+    }
+
+    public JTextField getjTextCreatedDate() {
+        return jTextCreatedDate;
+    }
+
+    public JTextField getjTextDateInput() {
+        return jTextDateInput;
+    }
+
+    public JTextField getjTextMaKH() {
+        return jTextMaKH;
+    }
+
+    public JTextField getjTextMoney() {
+        return jTextMoney;
+    }
+
+    public JTextField getjTextNameStaff() {
+        return jTextNameStaff;
+    }
+
+    public JTextField getjTextOpenStatus() {
+        return jTextOpenStatus;
+    }
+
+    public JTextField getjTextPeriodDate() {
+        return jTextPeriodDate;
+    }
+
+    public JTextField getjTextRate() {
+        return jTextRate;
     }
     
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
-        try {
-            btnSave.setEnabled(false);
-            int maKH = validateMaKH();
-            int soTien = validateSoTienGui();
-            validateCombobox();
-            PassbookType passbookType = (PassbookType) jCBPassbookType.getSelectedItem();
-            Period period = (Period) jCBPeriod.getSelectedItem();
-            Rate rate = rateDAO.getRateByPeriod(period.getPeriod());
-            Passbook passbook = new Passbook();
-            passbook.setId_staff(1);
-            passbook.setStart_date(jDateOpen.getDate());
-            passbook.setId_passbook_type(passbookType.getId());
-            passbook.setId_interest_rate(rate.getId());
-            passbook.setMoney_value(soTien);
-            passbook.setStatus("OPEN");
-            passbook.setId_client(maKH);
-            if(passbookController.insertPassbook(passbook) ) {
-                JOptionPane.showMessageDialog(this, "Mở sổ thành công");
-                refreshData();
-            }
-            else {
-                JOptionPane.showMessageDialog(this, "Mở sổ không thành công");
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(OpenPassbookView.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Lỗi!", JOptionPane.ERROR_MESSAGE);
-        }
-        btnSave.setEnabled(true);
-    }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        if(cPanel != null) cPanel.setVisible(true);
-
-    }//GEN-LAST:event_btnBackActionPerformed
-
-    private void jTextMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextMoneyActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextMoneyActionPerformed
-
-    private void jBtnTimKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTimKHActionPerformed
-        // TODO add your handling code here:
-        jLabelCustomerName.setText("");
-
-        try {
-            // kiểm tra trường mã khách hàng khi nhập
-            int maKH = validateMaKH();
-            // tìm kiếm khách hàng trong db
-            if (clientDAO.isClientExistedId(maKH)) {
-                Client client = clientDAO.getClientById(maKH);
-                String tenKH = client.getFirstname().concat(" ").concat(client.getLastName()).trim();
-                // cập nhập thông tin
-                jLabelCustomerName.setText(tenKH);
-            } else {
-                JOptionPane.showMessageDialog(this, "Mã khách hàng không tồn tại", "Lỗi!", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi!", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jBtnTimKHActionPerformed
-
-    private void jCBPassbookTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBPassbookTypeActionPerformed
-        // TODO add your handling code here:
-//        PassbookType passbookType = (PassbookType)jCBPassbookType.getSelectedItem();
-//        if(passbookType.getCode().equals("KKH")) {
-//            jCBPeriod.setEnabled(false);
-//        }
-//        else {
-//            jCBPeriod.setEnabled(true);
-//        }
-        
-    }//GEN-LAST:event_jCBPassbookTypeActionPerformed
-
-    private void jCBPeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBPeriodActionPerformed
-        // TODO add your handling code here:
-        updateRate();
-        updatePeriodDate();
-    }//GEN-LAST:event_jCBPeriodActionPerformed
-
-    private boolean isNullOrEmpty(String text) {
-        return text == null || text.isEmpty();
-    }
-
-    private boolean isOnlyNumber(String text) {
-        return text.matches("[0-9]+");
-    }
-
-    private int validateMaKH() throws Exception {
-        String text = jTextMaKH.getText().trim();
-        if (isNullOrEmpty(text)) {
-            throw new Exception("Mã khách hàng không được để trống");
-        } //        else if(text.length() > 8) {
-        //            return "Mã khách hàng nhỏ hơn 8 ký tự";
-        //        }
-        else if (!isOnlyNumber(text)) {
-            throw new Exception("Mã khách hàng không phải là số");
-        }
-        try {
-            int maKH = Integer.parseInt(text);
-            return maKH;
-        }
-        catch(NumberFormatException ex) {
-            throw new Exception("Định dạng số không hợp lệ");
-        }
-    }
-
-    private int validateSoTienGui() throws Exception {
-        String text = jTextMoney.getText().trim();
-        if (isNullOrEmpty(text)) {
-            throw new Exception("Số tiền không được để trống");
-        } else if (!isOnlyNumber(text)) {
-            throw new Exception("Số tiền nhập vào không phải là số");
-        } else {
-            try {
-                int money = Integer.parseInt(text);
-                if(money % 1000 != 0) {
-                    throw new Exception("Số tiền phải là bội của 1000đ");
-                }
-                PassbookType passbookType = (PassbookType)jCBPassbookType.getSelectedItem();
-                if(!passbookController.validateMinAmountRequired(passbookType.getCode(), money)) {
-                    throw new Exception("Số tiền gửi phải lớn hơn " +passbookController.getMinAmount(passbookType.getCode())+ "đ");
-                }
-                return money;
-            } catch(NumberFormatException ex) {
-                throw new Exception("Định dạng số tiền không hợp lệ");
-            }
-        }
-    }
 
     /**
      * @param args the command line arguments
@@ -597,81 +488,4 @@ public class OpenPassbookView extends javax.swing.JFrame {
     private javax.swing.JTextField jTextRate;
     // End of variables declaration//GEN-END:variables
 
-    
-    private void refreshData() {
-        jTextMaKH.setText("");
-        jTextMoney.setText("");
-        jTextPeriodDate.setText("../../....");
-        jLabelCustomerName.setText("");
-        jCBPassbookType.setSelectedIndex(0);
-        jCBPeriod.setSelectedIndex(0);
-        jDateOpen.setDate(Calendar.getInstance().getTime());
-    }
-    private void loadDefaultValues() {
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(StringUtility.DATE_FORMAT);
-        String currentDate = sdf.format(calendar.getTime());
-        jTextCreatedDate.setText(currentDate);
-        jTextDateInput.setText(currentDate);
-        jTextRate.setEditable(false);
-        jDateOpen.setDate(calendar.getTime());
-        loadPassbookType();
-        loadPeriod();
-        updateRate();
-        updatePeriodDate();
-    }
-
-    private void loadPassbookType() {
-        List<PassbookType> passbook_types = passbookTypeDAO.getAllPassbookType();
-        for(PassbookType type : passbook_types) {
-             jCBPassbookType.addItem(type);
-        }  
-    }
-
-    private void loadPeriod() {
-        List<Rate> list_rate = rateDAO.getAllRate();
-        for(Rate rate : list_rate) {
-            jCBPeriod.addItem(new Period(rate.getPeriod()));
-        }
-    }
-
-    private void updateRate() {
-        Period period = (Period) jCBPeriod.getSelectedItem();
-        Rate rate = rateDAO.getRateByPeriod(period.getPeriod());
-        jTextRate.setText(String.valueOf(rate.getRate()).trim());        
-    }
-
-    private void updatePeriodDate() {
-        Period period = (Period) jCBPeriod.getSelectedItem();
-        if(period.getPeriod() <= 0) {
-            jTextPeriodDate.setText("../../....");
-        }
-        else {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(jDateOpen.getDate());
-            calendar.add(Calendar.MONTH, period.getPeriod());
-            SimpleDateFormat sdf = new SimpleDateFormat(StringUtility.DATE_FORMAT);
-            String periodDate = sdf.format(calendar.getTime());
-            jTextPeriodDate.setText(periodDate);
-        }
-    }
-
-    private void validateCombobox() throws Exception {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        PassbookType type = (PassbookType)jCBPassbookType.getSelectedItem();
-        if(!type.getCode().equals("KKH")) {
-            Period period = (Period) jCBPeriod.getSelectedItem();
-            if(period.getPeriod() == Period.KKH) {
-                jCBPeriod.requestFocus();
-                throw new Exception("Chọn kỳ hạn hợp lệ");
-            }
-        }
-//        else if(type.getCode().equals("KKH")) {
-//            Period period = (Period) jCBPeriod.getSelectedItem();
-//            if(period.getPeriod() != Period.KKH) {
-//                jCBPeriod.requestFocus();
-//                throw new Exception("Chọn kỳ hạn hợp lệ");
-//            }
-//        }
-    }
 }

@@ -5,6 +5,8 @@
  */
 package View;
 
+import Controller.OpenPassbookController;
+
 /**
  *
  * @author Phạm Đức Mạnh
@@ -15,7 +17,7 @@ public class CPanel extends javax.swing.JFrame {
      * Creates new form CPannel
      */
     ClientRegisterView clientRegisterView;
-    OpenPassbookView openPassbookView;
+    OpenPassbookController openPassbookController;
     CalculateInterestSearchView calculateInterestSearchView;
     public CPanel() {
         initComponents();
@@ -111,10 +113,11 @@ public class CPanel extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if(openPassbookView == null){
-            openPassbookView = new OpenPassbookView();
+        if(openPassbookController == null){
+            openPassbookController = new OpenPassbookController();
+            openPassbookController.setCPanel(this);
         }
-        openPassbookView.setVisible(true);
+        openPassbookController.show();
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
