@@ -58,11 +58,11 @@ public class CalculateInterestResultView extends javax.swing.JFrame {
         cal.add(Calendar.MONTH, pbs.getKyhan());
         Timestamp ngaydaohan = new Timestamp(cal.getTimeInMillis());
         jLbNgayDaoHan.setText(ngaydaohan.toString());
-        double lai = TinhLai();
+        double lai = TinhLai(pbs);
         jLbInterest.setText(String.format("%.3f", lai));
     }
 
-    public double TinhLai() {
+    public double TinhLai(PassBookSearch pbs) {
         Calendar cal = Calendar.getInstance();
         double lai = 0;
         int ngay = Math.round((cal.getTimeInMillis() - pbs.getNgayMo().getTime()) / (1000 * 60 * 60 * 24));
@@ -333,4 +333,6 @@ public class CalculateInterestResultView extends javax.swing.JFrame {
     private javax.swing.JLabel jLbSTK;
     private javax.swing.JLabel jLbSoSoTK;
     // End of variables declaration//GEN-END:variables
+
+
 }

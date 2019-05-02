@@ -47,7 +47,7 @@ public class RateDAOTest {
     //
     // @Test
     // public void hello() {}
-    
+    //4 testcase
     @Test
     public void TestRateExistedId() {
         RateDAO rateDAO = new RateDAO();
@@ -67,7 +67,7 @@ public class RateDAOTest {
     @Test
     public void TestRateNotExistedId() {
         RateDAO rateDAO = new RateDAO();
-        assertEquals(rateDAO.isRateExistedId(11),false);
+        assertEquals(rateDAO.isRateExistedId(12),false);
         assertEquals(rateDAO.isRateExistedId(0),false);
     }
     
@@ -85,7 +85,7 @@ public class RateDAOTest {
     @Test
     public void TestGetAllRate() {
         RateDAO rateDAO = new RateDAO();
-        assertEquals(rateDAO.getAllRate().size(),10);
+        assertEquals(rateDAO.getAllRate().size(),11);
     }
     
     

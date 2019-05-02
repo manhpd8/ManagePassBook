@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAO;
+package Controller;
 
 import Controller.PassbookController;
 import Model.PassbookType;
@@ -45,7 +45,7 @@ public class PassbookControllerTest {
     //
     // @Test
     // public void hello() {}
-    
+    // 16 testcase
     @Test
     public void TestValidateMinAmountRequired1() {
         PassbookController passbookController = new PassbookController();

@@ -21,10 +21,9 @@ import java.util.logging.Logger;
  * @author Phạm Đức Mạnh
  */
 public class ClientDAO {
-    
+    public  Connection con = DBConnect.getConnecttion();
     public boolean isClientExistedId(int id){
         try {
-            Connection con = DBConnect.getConnecttion();
             String sql = "SELECT count(*) FROM manage_passbook.client where id= '" + id +"'";
             PreparedStatement ps;
             ps = (PreparedStatement) con.prepareStatement(sql);
@@ -43,7 +42,6 @@ public class ClientDAO {
     
     public boolean isClientExisted(String idCard){
         try {
-            Connection con = DBConnect.getConnecttion();
             String sql = "SELECT count(*) FROM manage_passbook.client where idCard = '" + idCard +"'";
             PreparedStatement ps;
             ps = (PreparedStatement) con.prepareStatement(sql);
@@ -61,10 +59,9 @@ public class ClientDAO {
     }
     
     public boolean insertUser(Client u) {
-        Connection connection = DBConnect.getConnecttion();
         String sql = "INSERT INTO `manage_passbook`.`client` (`firstName`, `lastname`, `dateOfBirth`, `gender`, `idCard`, `phone`, `address`) VALUES(?,?,?,?,?,?,?)";
         try {
-            PreparedStatement ps = connection.prepareCall(sql);
+            PreparedStatement ps = con.prepareCall(sql);
             ps.setString(1, u.getFirstname());
             ps.setString(2, u.getLastName());
             ps.setDate(3, new Date(u.getDateOfBirth().getTime()));

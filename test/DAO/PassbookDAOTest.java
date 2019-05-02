@@ -51,10 +51,11 @@ public class PassbookDAOTest {
     //
     // @Test
     // public void hello() {}
+    //4 testcase
     @Test
     public void TestPassbookExisted() {
         PassbookDAO passbookDAO = new PassbookDAO();
-        boolean found = passbookDAO.isPassbookExistedId(4);
+        boolean found = passbookDAO.isPassbookExistedId(1);
         assertEquals(found, true);
     }
 
@@ -77,7 +78,7 @@ public class PassbookDAOTest {
     @Test
     public void TestGetPassbookById() {
         PassbookDAO passbookDAO = new PassbookDAO();
-        Passbook passbook = passbookDAO.getPassbookById(4);
-        assertEquals(passbook.getId(), 4);
+        Passbook passbook = passbookDAO.getPassbookById(1);
+        assertEquals(passbook.getId(), 1);
     }
 }

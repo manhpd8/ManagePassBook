@@ -7,6 +7,7 @@ package DTO;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 /**
  *
@@ -90,7 +91,12 @@ public class PassBookSearch implements Serializable{
         this.NgayMo = NgayMo;
     }
 
-    
+    public int getSoNgayTinhDenHienTai(){
+        int ret;
+        Calendar cal = Calendar.getInstance();
+        ret= Math.round((cal.getTimeInMillis() - getNgayMo().getTime()) / (1000 * 60 * 60 * 24));
+        return ret;
+    }
 
     
 }
