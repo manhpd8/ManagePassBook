@@ -155,26 +155,6 @@ public class OpenPassbookController {
             view.getjCBPeriod().addItem(new Period(rate.getPeriod()));
         }
     }
-
-    private void validateCombobox() throws Exception {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        PassbookType type = (PassbookType)view.getjCBPassbookType().getSelectedItem();
-        if(!type.getCode().equals("KKH")) {
-            Period period = (Period) view.getjCBPeriod().getSelectedItem();
-            if(period.getPeriod() == Period.KKH) {
-                view.getjCBPeriod().requestFocus();
-                throw new Exception("Chọn kỳ hạn hợp lệ");
-            }
-        }
-//        else if(type.getCode().equals("KKH")) {
-//            Period period = (Period) view.getjCBPeriod().getSelectedItem();
-//            if(period.getPeriod() != Period.KKH) {
-//                jCBPeriod.requestFocus();
-//                throw new Exception("Chọn kỳ hạn hợp lệ");
-//            }
-//        }
-    }
-
     
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {                                        
         // TODO add your handling code here:
@@ -183,7 +163,7 @@ public class OpenPassbookController {
             view.getBtnSave().setEnabled(false);
             int maKH = validateMaKH();
             int soTien = validateSoTienGui();
-            validateCombobox();
+            validateKiHan();
             validateOpenDate();
             // Lấy thông tin passbook        
             PassbookType passbookType = (PassbookType) view.getjCBPassbookType().getSelectedItem();
@@ -287,7 +267,26 @@ public class OpenPassbookController {
         return text.matches("[0-9]+");
     }
 
-    private int validateMaKH() throws Exception {
+    public void validateKiHan() throws Exception {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PassbookType type = (PassbookType)view.getjCBPassbookType().getSelectedItem();
+        if(!type.getCode().equals("KKH")) {
+            Period period = (Period) view.getjCBPeriod().getSelectedItem();
+            if(period.getPeriod() == Period.KKH) {
+                view.getjCBPeriod().requestFocus();
+                throw new Exception("Chọn kỳ hạn hợp lệ");
+            }
+        }
+//        else if(type.getCode().equals("KKH")) {
+//            Period period = (Period) view.getjCBPeriod().getSelectedItem();
+//            if(period.getPeriod() != Period.KKH) {
+//                jCBPeriod.requestFocus();
+//                throw new Exception("Chọn kỳ hạn hợp lệ");
+//            }
+//        }
+    }
+    
+    public int validateMaKH() throws Exception {
         String text = view.getjTextMaKH().getText().trim();
         if (isNullOrEmpty(text)) {
             throw new Exception("Mã khách hàng không được để trống");
@@ -310,12 +309,12 @@ public class OpenPassbookController {
         }
     }
 
-    private int validateSoTienGui() throws Exception {
+    public int validateSoTienGui() throws Exception {
         String text = view.getjTextMoney().getText().trim();
         if (isNullOrEmpty(text)) {
             throw new Exception("Số tiền không được để trống");
         } else if (!isOnlyNumber(text)) {
-            throw new Exception("Số tiền nhập vào không phải là số");
+            throw new Exception("Số tiền nhập vào chứa ký tự không hợp lệ");
         } else {
             try {
                 int money = Integer.parseInt(text);
@@ -324,7 +323,7 @@ public class OpenPassbookController {
                 }
                 PassbookType passbookType = (PassbookType)view.getjCBPassbookType().getSelectedItem();
                 if(!this.validateMinAmountRequired(passbookType.getCode(), money)) {
-                    throw new Exception("Số tiền gửi phải lớn hơn " +this.getMinAmount(passbookType.getCode())+ "đ");
+                    throw new Exception("Số tiền gửi phải lớn hơn hoặc bằng " +this.getMinAmount(passbookType.getCode())+ "đ");
                 }
                 return money;
             } catch(NumberFormatException ex) {
@@ -333,7 +332,7 @@ public class OpenPassbookController {
         }
     }
 
-    private void validateOpenDate() throws Exception {
+    public void validateOpenDate() throws Exception {
         Date date = view.getjDateOpen().getDate();
         Date current = Calendar.getInstance().getTime();
         
