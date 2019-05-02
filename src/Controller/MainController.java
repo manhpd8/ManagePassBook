@@ -5,6 +5,8 @@
  */
 package Controller;
 
+import View.CPanel;
+
 /**
  *
  * @author Phạm Đức Mạnh
@@ -13,7 +15,9 @@ public class MainController {
     static accountCotroller loginCotroller;
     public static void main(String[] args) {
         System.out.println("dfd");
-        loginCotroller = new accountCotroller();
-        
+        //loginCotroller = new accountCotroller();
+        CPanel cPanel= new CPanel();
+        cPanel.setTitle("Hệ thống quản lý sổ tiết kiệm");
+        cPanel.setVisible(true);
     }
 }

@@ -49,38 +49,51 @@ public class ClientRegisterView extends javax.swing.JFrame {
 
         buttonGroup_gender = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField_lastName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextField_firstname = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jDateChooser_dateOfBirth = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
+        jRadioButton_male = new javax.swing.JRadioButton();
+        jRadioButton_female = new javax.swing.JRadioButton();
+        jRadioButton_unknow = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
         jTextField_idCard = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jTextField_phone = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jDateChooser_dateOfBirth = new com.toedter.calendar.JDateChooser();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField_lastName = new javax.swing.JTextField();
-        jButton_register = new javax.swing.JButton();
-        jLabel_notify = new javax.swing.JLabel();
-        jRadioButton_male = new javax.swing.JRadioButton();
-        jRadioButton_female = new javax.swing.JRadioButton();
-        jRadioButton_unknow = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea_address = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton_register = new javax.swing.JButton();
+        jLabel_notify = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("ĐĂNG KÝ THÀNH VIÊN");
 
+        jLabel8.setText("Họ:");
+
         jLabel2.setText("Tên:");
 
         jLabel3.setText("Ngày sinh");
 
+        jDateChooser_dateOfBirth.setEnabled(false);
+
         jLabel4.setText("Giới tính");
+
+        buttonGroup_gender.add(jRadioButton_male);
+        jRadioButton_male.setText("Nam");
+
+        buttonGroup_gender.add(jRadioButton_female);
+        jRadioButton_female.setText("Nữ");
+
+        buttonGroup_gender.add(jRadioButton_unknow);
+        jRadioButton_unknow.setText("Không rõ");
 
         jLabel5.setText("CMND (id card)");
 
@@ -88,9 +101,23 @@ public class ClientRegisterView extends javax.swing.JFrame {
 
         jLabel7.setText("Địa chỉ (address)");
 
-        jDateChooser_dateOfBirth.setEnabled(false);
+        jTextArea_address.setColumns(20);
+        jTextArea_address.setRows(5);
+        jScrollPane1.setViewportView(jTextArea_address);
 
-        jLabel8.setText("Họ:");
+        jButton2.setText("Xóa dữ liệu");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Quay lại");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton_register.setText("Đăng ký");
         jButton_register.addActionListener(new java.awt.event.ActionListener() {
@@ -102,33 +129,6 @@ public class ClientRegisterView extends javax.swing.JFrame {
         jLabel_notify.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel_notify.setForeground(new java.awt.Color(255, 51, 0));
         jLabel_notify.setText("jLabel9");
-
-        buttonGroup_gender.add(jRadioButton_male);
-        jRadioButton_male.setText("Nam");
-
-        buttonGroup_gender.add(jRadioButton_female);
-        jRadioButton_female.setText("Nữ");
-
-        buttonGroup_gender.add(jRadioButton_unknow);
-        jRadioButton_unknow.setText("Không rõ");
-
-        jTextArea_address.setColumns(20);
-        jTextArea_address.setRows(5);
-        jScrollPane1.setViewportView(jTextArea_address);
-
-        jButton1.setText("Quay lại");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Xóa dữ liệu");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

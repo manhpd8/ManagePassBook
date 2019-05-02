@@ -19,6 +19,7 @@ import View.CPanel;
 import View.OpenPassbookView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,6 +57,7 @@ public class OpenPassbookController {
     private void initView() {
         view = new OpenPassbookView();
         if(view != null) {
+            view.setTitle("Mở sổ tiết kiệm");
             loadDefaultViewValues();
             addEvents();
         }
@@ -72,6 +74,7 @@ public class OpenPassbookController {
         loadPeriod();
         updateRate();
         updatePeriodDate();
+        refreshViewValues();
     }
     
     private void addEvents() {
@@ -136,6 +139,7 @@ public class OpenPassbookController {
         view.getjLabelCustomerName().setText("");
         view.getjCBPassbookType().setSelectedIndex(0);
         view.getjCBPeriod().setSelectedIndex(0);
+        view.getjCBPeriod().setEnabled(false);
         view.getjDateOpen().setDate(Calendar.getInstance().getTime());
     }
     private void loadPassbookType() {
@@ -175,10 +179,13 @@ public class OpenPassbookController {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {                                        
         // TODO add your handling code here:
         try {
+            // Kiểm tra hợp lệ các trường dữ liệu
             view.getBtnSave().setEnabled(false);
             int maKH = validateMaKH();
             int soTien = validateSoTienGui();
             validateCombobox();
+            validateOpenDate();
+            // Lấy thông tin passbook        
             PassbookType passbookType = (PassbookType) view.getjCBPassbookType().getSelectedItem();
             Period period = (Period) view.getjCBPeriod().getSelectedItem();
             Rate rate = rateDAO.getRateByPeriod(period.getPeriod());
@@ -198,7 +205,7 @@ public class OpenPassbookController {
                 JOptionPane.showMessageDialog(view, "Mở sổ không thành công");
             }
         } catch (Exception ex) {
-            Logger.getLogger(OpenPassbookView.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(OpenPassbookView.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Lỗi!", JOptionPane.ERROR_MESSAGE);
         }
         view.getBtnSave().setEnabled(true);
@@ -222,15 +229,11 @@ public class OpenPassbookController {
         try {
             // kiểm tra trường mã khách hàng khi nhập
             int maKH = validateMaKH();
-            // tìm kiếm khách hàng trong db
-            if (clientDAO.isClientExistedId(maKH)) {
-                Client client = clientDAO.getClientById(maKH);
-                String tenKH = client.getFirstname().concat(" ").concat(client.getLastName()).trim();
-                // cập nhập thông tin
-                view.getjLabelCustomerName().setText(tenKH);
-            } else {
-                JOptionPane.showMessageDialog(view, "Mã khách hàng không tồn tại", "Lỗi!", JOptionPane.ERROR_MESSAGE);
-            }
+            Client client = clientDAO.getClientById(maKH);
+            String tenKH = client.getFirstname().concat(" ").concat(client.getLastName()).trim();
+            // cập nhập thông tin
+            view.getjLabelCustomerName().setText(tenKH);
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(view, e.getMessage(), "Lỗi!", JOptionPane.ERROR_MESSAGE);
         }
@@ -238,13 +241,14 @@ public class OpenPassbookController {
 
     private void jCBPassbookTypeActionPerformed(java.awt.event.ActionEvent evt) {                                                
         // TODO add your handling code here:
-//        PassbookType passbookType = (PassbookType)jCBPassbookType.getSelectedItem();
-//        if(passbookType.getCode().equals("KKH")) {
-//            jCBPeriod.setEnabled(false);
-//        }
-//        else {
-//            jCBPeriod.setEnabled(true);
-//        }
+        PassbookType passbookType = (PassbookType)view.getjCBPassbookType().getSelectedItem();
+        if(passbookType.getCode().equals("KKH")) {
+            view.getjCBPeriod().setSelectedIndex(0);
+            view.getjCBPeriod().setEnabled(false);
+        }
+        else {
+            view.getjCBPeriod().setEnabled(true);
+        }
         
     }                                               
 
@@ -295,6 +299,10 @@ public class OpenPassbookController {
         }
         try {
             int maKH = Integer.parseInt(text);
+            // tìm kiếm khách hàng trong db
+            if (!clientDAO.isClientExistedId(maKH)) {
+                throw new Exception("Mã khách hàng không tồn tại");
+            }
             return maKH;
         }
         catch(NumberFormatException ex) {
@@ -322,6 +330,15 @@ public class OpenPassbookController {
             } catch(NumberFormatException ex) {
                 throw new Exception("Định dạng số tiền không hợp lệ");
             }
+        }
+    }
+
+    private void validateOpenDate() throws Exception {
+        Date date = view.getjDateOpen().getDate();
+        Date current = Calendar.getInstance().getTime();
+        
+        if(date.after(current)) {
+            throw new Exception("Ngày mở sổ không hợp lệ");
         }
     }
 }

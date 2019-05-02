@@ -98,6 +98,7 @@ public class CPanel extends javax.swing.JFrame {
         this.setVisible(false);
         if(clientRegisterView == null){
             clientRegisterView = new ClientRegisterView();
+            clientRegisterView.setTitle("Đăng ký thành viên");
             clientRegisterView.setcPanel(this);
         }
         clientRegisterView.setVisible(true);
@@ -107,6 +108,7 @@ public class CPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(calculateInterestSearchView == null){
             calculateInterestSearchView = new CalculateInterestSearchView();
+            calculateInterestSearchView.setTitle("Tính lãi");
         }
         calculateInterestSearchView.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed

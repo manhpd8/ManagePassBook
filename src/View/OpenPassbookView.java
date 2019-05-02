@@ -5,26 +5,10 @@
  */
 package View;
 
-import Controller.OpenPassbookController;
-import DAO.ClientDAO;
-import DAO.PassbookTypeDAO;
-import DAO.RateDAO;
-import Model.Client;
-import Model.Passbook;
-import Model.PassbookType;
-import Model.Period;
-import Model.Rate;
-import Utility.StringUtility;
 import com.toedter.calendar.JDateChooser;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -170,7 +154,7 @@ public class OpenPassbookView extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText("Ngày gửi:");
 
-        jDateOpen.setDateFormatString("dd/mm/yyyy");
+        jDateOpen.setDateFormatString("dd/MM/yyyy");
         jDateOpen.setEnabled(false);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N

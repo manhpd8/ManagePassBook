@@ -358,7 +358,7 @@
         <Component class="com.toedter.calendar.JDateChooser" name="jDateOpen">
           <Properties>
             <Property name="dateFormatString" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="&quot;dd/mm/yyyy&quot;" type="code"/>
+              <Connection code="&quot;dd/MM/yyyy&quot;" type="code"/>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
