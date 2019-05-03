@@ -76,7 +76,7 @@ public class PassbookControllerTest {
     
     @Test
     public void TestValidateMaKH_KhongPhaiSo(){
-        controller.view.getjTextMaKH().setText("nhom7");
+        controller.view.getjTextMaKH().setText("11x");
         try {
             controller.validateMaKH();
             fail();
@@ -88,7 +88,7 @@ public class PassbookControllerTest {
     
     @Test
     public void TestValidateMaKH_KhongTonTai(){
-        controller.view.getjTextMaKH().setText("5");
+        controller.view.getjTextMaKH().setText("111");
         try {
             controller.validateMaKH();
             fail();
@@ -164,6 +164,37 @@ public class PassbookControllerTest {
             fail();
         } 
     }
+    
+    /*
+        Kiểm tra mở sổ theo hình thức tính lãi trước và kỳ hạn là không kỳ hạn
+    */
+    @Test 
+    public void ValidateKiHan_TinhLaiTruoc_KhongKyHan() {
+        controller.view.getjCBPassbookType().setSelectedIndex(1);
+        controller.view.getjCBPeriod().setSelectedIndex(0);
+        try {
+            controller.validateKiHan();
+            fail();
+        } catch (Exception ex) {
+            assertEquals(ex.getMessage(), "Kỳ hạn không hợp lệ");
+        }
+    }
+    
+    /*
+        Kiểm tra mở sổ theo hình thức Không kỳ hạn và kỳ hạn là không kỳ hạn
+    */
+    @Test 
+    public void ValidateKiHan_KhongKyHan_KhongKyHan() {
+        controller.view.getjCBPassbookType().setSelectedIndex(0);
+        controller.view.getjCBPeriod().setSelectedIndex(0);
+        try {
+            controller.validateKiHan();
+            
+        } catch (Exception ex) {
+            fail();
+        }
+    }
+    
     
     @Test 
     public void TestValidateOpenDate_LonHonThoiGianHienTai() {

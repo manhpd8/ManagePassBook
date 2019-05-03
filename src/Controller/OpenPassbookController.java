@@ -274,37 +274,41 @@ public class OpenPassbookController {
             Period period = (Period) view.getjCBPeriod().getSelectedItem();
             if(period.getPeriod() == Period.KKH) {
                 view.getjCBPeriod().requestFocus();
-                throw new Exception("Chọn kỳ hạn hợp lệ");
+                throw new Exception("Kỳ hạn không hợp lệ");
             }
         }
-//        else if(type.getCode().equals("KKH")) {
+//      else if(type.getCode().equals("KKH")) {
 //            Period period = (Period) view.getjCBPeriod().getSelectedItem();
 //            if(period.getPeriod() != Period.KKH) {
-//                jCBPeriod.requestFocus();
-//                throw new Exception("Chọn kỳ hạn hợp lệ");
+//                view.getjCBPeriod().requestFocus();
+//                throw new Exception("Kỳ hạn không hợp lệ");
 //            }
-//        }
+//       }
     }
     
     public int validateMaKH() throws Exception {
         String text = view.getjTextMaKH().getText().trim();
         if (isNullOrEmpty(text)) {
+            view.getjTextMaKH().requestFocus();
             throw new Exception("Mã khách hàng không được để trống");
         } //        else if(text.length() > 8) {
         //            return "Mã khách hàng nhỏ hơn 8 ký tự";
         //        }
         else if (!isOnlyNumber(text)) {
+            view.getjTextMaKH().requestFocus();
             throw new Exception("Mã khách hàng không phải là số");
         }
         try {
             int maKH = Integer.parseInt(text);
             // tìm kiếm khách hàng trong db
             if (!clientDAO.isClientExistedId(maKH)) {
+                view.getjTextMaKH().requestFocus();
                 throw new Exception("Mã khách hàng không tồn tại");
             }
             return maKH;
         }
         catch(NumberFormatException ex) {
+            view.getjTextMaKH().requestFocus();
             throw new Exception("Định dạng số không hợp lệ");
         }
     }
@@ -312,21 +316,26 @@ public class OpenPassbookController {
     public int validateSoTienGui() throws Exception {
         String text = view.getjTextMoney().getText().trim();
         if (isNullOrEmpty(text)) {
+            view.getjTextMoney().requestFocus();
             throw new Exception("Số tiền không được để trống");
         } else if (!isOnlyNumber(text)) {
+             view.getjTextMoney().requestFocus();
             throw new Exception("Số tiền nhập vào chứa ký tự không hợp lệ");
         } else {
             try {
                 int money = Integer.parseInt(text);
                 if(money % 1000 != 0) {
+                     view.getjTextMoney().requestFocus();
                     throw new Exception("Số tiền phải là bội của 1000đ");
                 }
                 PassbookType passbookType = (PassbookType)view.getjCBPassbookType().getSelectedItem();
                 if(!this.validateMinAmountRequired(passbookType.getCode(), money)) {
+                     view.getjTextMoney().requestFocus();
                     throw new Exception("Số tiền gửi phải lớn hơn hoặc bằng " +this.getMinAmount(passbookType.getCode())+ "đ");
                 }
                 return money;
             } catch(NumberFormatException ex) {
+                 view.getjTextMoney().requestFocus();
                 throw new Exception("Định dạng số tiền không hợp lệ");
             }
         }
@@ -337,6 +346,7 @@ public class OpenPassbookController {
         Date current = Calendar.getInstance().getTime();
         
         if(date.after(current)) {
+            view.getjDateOpen().requestFocus();
             throw new Exception("Ngày mở sổ không hợp lệ");
         }
     }
