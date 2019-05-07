@@ -28,6 +28,7 @@ public class LoginView extends javax.swing.JFrame {
         accController = new accountCotroller();
         acc = new Account();
         cPanel = new CPanel();
+        cPanel.setTitle("Hệ thống quản lý sổ tiết kiệm");
     }
 
     /**

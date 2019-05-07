@@ -54,7 +54,8 @@ public class PassbookDAO {
             ps.setInt(5, passbook.getId_staff());
             ps.setDouble(6, passbook.getMoney_value());
             ps.setString(7, passbook.getStatus());
-            ps.executeUpdate();
+            int count = ps.executeUpdate();
+            if(count == 0) return false;
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ClientDAO.class.getName()).log(Level.SEVERE, null, ex);

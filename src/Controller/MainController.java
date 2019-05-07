@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import View.CPanel;
+import View.LoginView;
 
 /**
  *
@@ -16,8 +16,8 @@ public class MainController {
     public static void main(String[] args) {
         System.out.println("dfd");
         //loginCotroller = new accountCotroller();
-        CPanel cPanel= new CPanel();
-        cPanel.setTitle("Hệ thống quản lý sổ tiết kiệm");
-        cPanel.setVisible(true);
+        LoginView login= new LoginView();
+        login.setTitle("Đăng nhập");
+        login.setVisible(true);
     }
 }
