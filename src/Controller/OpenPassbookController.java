@@ -252,7 +252,7 @@ public class OpenPassbookController {
         else {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(view.getjDateOpen().getDate());
-            calendar.add(Calendar.MONTH, period.getPeriod());
+            calendar.add(Calendar.DATE, period.getPeriod() * 30); // thêm số ngày = kì hạn * 30
             SimpleDateFormat sdf = new SimpleDateFormat(StringUtility.DATE_FORMAT);
             String periodDate = sdf.format(calendar.getTime());
             view.getjTextPeriodDate().setText(periodDate);
